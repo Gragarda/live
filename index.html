@@ -35,7 +35,7 @@
                 // Si live, rediriger selon le type d'appareil
                 if (data.data && data.data.length > 0) {
                     if (/Mobi|Android/i.test(navigator.userAgent)) {
-                        window.location.href = "https://www.youtube.com/gragarda/live";
+                        window.location.href = "youtube://youtube.com/gragarda/live";
                     } else {
                         window.location.href = "https://www.twitch.tv/gragarda";
                     }
