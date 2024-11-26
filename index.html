@@ -35,18 +35,18 @@
                 // Si live, rediriger selon le type d'appareil
                 if (data.data && data.data.length > 0) {
                     if (/Mobi|Android/i.test(navigator.userAgent)) {
-                        window.location.replace("youtube://www.youtube.com/gragarda/live");
+                        window.location.href = "youtube://www.youtube.com/gragarda/live";
                     } else {
                         window.location.href = "https://www.twitch.tv/gragarda";
                     }
                 } else {
                     // Si pas en live, rediriger vers Linktree
-                    window.location.replace("youtube://www.youtube.com/gragarda/live");
+                    window.location.href = "youtube://www.youtube.com/gragarda/live";
                 }
             } catch (error) {
                 console.error("Erreur lors de la vérification du statut live:", error);
                 // En cas d'erreur, rediriger par défaut vers Linktree
-                window.location.replace("youtube://www.youtube.com/gragarda/live");
+                window.location.href = "youtube://www.youtube.com/gragarda/live";
             }
         }
 
