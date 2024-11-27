@@ -17,10 +17,17 @@
     <meta property="og:video:width" content="1920">
     <meta property="og:video:height" content="1080">
     <script>
+        async function refreshToken() {
+            const refreshToken = "klowye3ue5dd0hsgvajyjx0v1dr5bcwo81crjdcv1o1f9f2s86"; // Remplace par ton refresh token Twitch
+            const response = await fetch(`https://twitchtokengenerator.com/api/refresh/${refreshToken}`);
+            const data = await response.json();
+            return data.access_token;
+        }
+
         async function checkLiveStatus() {
             const twitchUsername = "gragarda";
             const twitchClientId = "bhmilekxvhc4t0cwz1vuteiem9vi3l"; // Remplace par ton Client ID Twitch
-            const twitchToken = "z5j0bu9hpj5gv69rb40khpbhxexbia"; // Remplace par ton token Twitch
+            let twitchToken = "9sa2entvzm8c8hyeygrhqmcmu47kgd"; // Remplace par ton token Twitch
 
             try {
                 // Ajouter un paramètre unique à l'URL pour éviter la mise en cache
@@ -28,12 +35,24 @@
                 const url = `https://api.twitch.tv/helix/streams?user_login=${twitchUsername}&${uniqueParam}`;
 
                 // Appel à l'API Twitch pour vérifier le statut live
-                const response = await fetch(url, {
+                let response = await fetch(url, {
                     headers: {
                         "Client-ID": twitchClientId,
                         "Authorization": `Bearer ${twitchToken}`
                     }
                 });
+
+                // Si le token est expiré, rafraîchir le token et réessayer
+                if (response.status === 401) {
+                    twitchToken = await refreshToken();
+                    response = await fetch(url, {
+                        headers: {
+                            "Client-ID": twitchClientId,
+                            "Authorization": `Bearer ${twitchToken}`
+                        }
+                    });
+                }
+
                 const data = await response.json();
 
                 // Si live, rediriger selon le type d'appareil
