@@ -32,7 +32,7 @@
             try {
                 // Ajouter un paramètre unique à l'URL pour éviter la mise en cache
                 const uniqueParam = `cache_buster=${new Date().getTime()}`;
-                const url = `https://api.twitch.tv/helix/streams?user_login=${twitchUsername}&${uniqueParam}`;
+                const url = `https://api.twitch.tv/helix/streams?user_login=${twitchUsername}`;
 
                 // Appel à l'API Twitch pour vérifier le statut live
                 let response = await fetch(url, {
