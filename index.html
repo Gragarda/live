@@ -18,7 +18,7 @@
     <meta property="og:video:height" content="1080">
     <script>
         async function refreshToken() {
-            const refreshToken = "klowye3ue5dd0hsgvajyjx0v1dr5bcwo81crjdcv1o1f9f2s86"; // Remplace par ton refresh token Twitch
+            const refreshToken = "cjkmaz4ppj8q5kendqtujxa7qqndenubh4h7vfjos24946m4mh"; // Remplace par ton refresh token Twitch
             const response = await fetch(`https://twitchtokengenerator.com/api/refresh/${refreshToken}`);
             const data = await response.json();
             return data.access_token;
@@ -27,7 +27,7 @@
         async function checkLiveStatus() {
             const twitchUsername = "gragarda";
             const twitchClientId = "bhmilekxvhc4t0cwz1vuteiem9vi3l"; // Remplace par ton Client ID Twitch
-            let twitchToken = "9sa2entvzm8c8hyeygrhqmcmu47kgd"; // Remplace par ton token Twitch
+            const twitchToken = "gv9msaynsk6dv7r7q0l83r8luhqaa1"; // Remplace par ton token Twitch
 
             try {
                 // Ajouter un paramètre unique à l'URL pour éviter la mise en cache
@@ -44,7 +44,7 @@
 
                 // Si le token est expiré, rafraîchir le token et réessayer
                 if (response.status === 401) {
-                    twitchToken = await refreshToken();
+                    await refreshToken();
                     response = await fetch(url, {
                         headers: {
                             "Client-ID": twitchClientId,
