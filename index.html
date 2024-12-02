@@ -17,59 +17,25 @@
     <meta property="og:video:width" content="1920">
     <meta property="og:video:height" content="1080">
     <script>
-        async function refreshToken() {
-            const refreshToken = "cjkmaz4ppj8q5kendqtujxa7qqndenubh4h7vfjos24946m4mh"; // Remplace par ton refresh token Twitch
-            const response = await fetch(`https://twitchtokengenerator.com/api/refresh/${refreshToken}`);
-            const data = await response.json();
-            return data.access_token;
-        }
-
         async function checkLiveStatus() {
-            const twitchUsername = "gragarda";
-            const twitchClientId = "bhmilekxvhc4t0cwz1vuteiem9vi3l"; // Remplace par ton Client ID Twitch
-            const twitchToken = "gv9msaynsk6dv7r7q0l83r8luhqaa1"; // Remplace par ton token Twitch
-
             try {
-                // Ajouter un paramètre unique à l'URL pour éviter la mise en cache
-                const uniqueParam = `cache_buster=${new Date().getTime()}`;
-                const url = `https://api.twitch.tv/helix/streams?user_login=${twitchUsername}`;
+                const response = await fetch(`https://twitch.tv/gragarda`, { mode: 'no-cors' });
+                const sourceCode = await response.text();
+                const data = response.json();
 
-                // Appel à l'API Twitch pour vérifier le statut live
-                let response = await fetch(url, {
-                    headers: {
-                        "Client-ID": twitchClientId,
-                        "Authorization": `Bearer ${twitchToken}`
-                    }
-                });
-
-                // Si le token est expiré, rafraîchir le token et réessayer
-                if (response.status === 401) {
-                    await refreshToken();
-                    response = await fetch(url, {
-                        headers: {
-                            "Client-ID": twitchClientId,
-                            "Authorization": `Bearer ${twitchToken}`
+                if (sourceCode.includes("isLiveBroadcast")) {
+                    if (data.data && data.data.length > 0) {
+                        if (/Mobi|Android/i.test(navigator.userAgent)) {
+                            window.location.href = "https://www.youtube.com/gragarda/live";
+                        } else {
+                            window.location.href = "https://www.twitch.tv/gragarda";
                         }
-                    });
-                }
-
-                const data = await response.json();
-
-                // Si live, rediriger selon le type d'appareil
-                if (data.data && data.data.length > 0) {
-                    if (/Mobi|Android/i.test(navigator.userAgent)) {
-                        window.location.href = "https://www.youtube.com/gragarda/live";
-                    } else {
-                        window.location.href = "https://www.twitch.tv/gragarda";
                     }
                 } else {
-                    // Si pas en live, rediriger vers Linktree
                     window.location.href = "https://www.linktr.ee/gragarda";
                 }
             } catch (error) {
-                console.error("Erreur lors de la vérification du statut live:", error);
-                // En cas d'erreur, rediriger par défaut vers Linktree
-                window.location.href = "https://www.linktr.ee/gragarda";
+                window.location.href = "https://www.twitch.tv/gragarda";
             }
         }
 
@@ -80,9 +46,8 @@
         window.addEventListener('error', function(event) {
             if (event.target.tagName === 'LINK' && event.target.getAttribute('rel') === 'icon') {
                 event.preventDefault();
-                event.stopPropagation();
             }
-        }, true);
+        });
     </script>
 </head>
 <body>
