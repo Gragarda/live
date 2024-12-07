@@ -25,7 +25,7 @@
                 const sourceCode = await response.text();
                 const data = response.json();
 
-                if (sourceCode.includes("isLiveBroadcast")) {
+                if (sourceCode.includes("liveIndicator")) {
                     if (data.data && data.data.length > 0) {
                         if (/Mobi|Android/i.test(navigator.userAgent)) {
                             window.location.href = "https://www.youtube.com/gragarda/live";
