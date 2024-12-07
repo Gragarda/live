@@ -18,26 +18,10 @@
     <meta property="og:video:height" content="1080">
     <script>
         async function checkLiveStatus() {
-            try {
-                const currentTime = new Date().toISOString();
-                const url = `https://twitch.tv/gragarda?timer=${encodeURIComponent(currentTime)}`;
-                const response = await fetch(url, { mode: 'no-cors' });
-                const sourceCode = await response.text();
-                const data = response.json();
-
-                if (sourceCode.includes("liveIndicator")) {
-                    if (data.data && data.data.length > 0) {
-                        if (/Mobi|Android/i.test(navigator.userAgent)) {
-                            window.location.href = "https://www.youtube.com/gragarda/live";
-                        } else {
-                            window.location.href = url;
-                        }
-                    }
-                } else {
-                    window.location.href = "https://www.linktr.ee/gragarda";
-                }
-            } catch (error) {
-                console.error(error);
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                window.location.href = "https://www.youtube.com/gragarda/live";
+            } else {
+                window.location.href = "https://www.twitch.tv/gragarda";
             }
         }
 
